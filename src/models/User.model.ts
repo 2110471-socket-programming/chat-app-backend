@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document ,Types } from 'mongoose';
 
 interface IUser extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   name: string;
   password: string;
   profileUrl?: string;
@@ -11,7 +11,6 @@ interface IUser extends Document {
 
 const UserSchema = new Schema<IUser>(
   {
-    _id: String,
     name: {
       type: String,
       required: true,
