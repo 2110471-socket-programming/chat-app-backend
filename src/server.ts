@@ -7,6 +7,7 @@ import ioRoutes from './io/io.routes';
 import userRouter from './user/user.routes';
 import chatRouter from './chat/chat.routes';
 import mongoose from 'mongoose';
+import storageRouter from './storage/storage.routes';
 
 const app: Application = express();
 const server = http.createServer(app);
@@ -23,6 +24,7 @@ const io = socketApplication(server);
 
 app.use('/api/users', userRouter);
 app.use('/api/chats', chatRouter);
+app.use('/api/storage', storageRouter);
 app.use(ioRoutes(io));
 
 server.listen(PORT, () => {
