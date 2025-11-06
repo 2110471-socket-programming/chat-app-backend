@@ -7,6 +7,7 @@ import authRouter from './auth/auth.routes';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import SocketApplication from './socket/socket.application';
+import storageRouter from './storage/storage.routes';
 
 const { app, server } = SocketApplication.getInstance();
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/api/users', userRouter);
 app.use('/api/chats', chatRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/storage', storageRouter);
 
 server.listen(PORT, () => {
   console.log(`Server started on port ${PORT} in ${NODE_ENV} mode`);

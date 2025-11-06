@@ -16,3 +16,7 @@ export const mongoUri =
   NODE_ENV === 'production'
     ? process.env.MONGO_URI_PROD || ''
     : process.env.MONGO_URI_DEV || '';
+
+export const spaceKey = process.env.SPACES_KEY || '';
+
+export const spaceSecret = process.env.SPACES_SECRET || '';
