@@ -1,53 +1,41 @@
+import express, { Application } from 'express';
 import http from 'http';
-import { Server } from 'socket.io';
+import { Server, DefaultEventsMap } from 'socket.io';
 import { clientUrl } from '../config';
-import * as socketService from './socket.service';
-import { IMessage } from '../models/Chat.history.model';
+import socketEventListener from './socket.event';
 
-const socketApplication = (
-  server: http.Server<
-    typeof http.IncomingMessage, 
-    typeof http.ServerResponse
-  >
-) => {
-  const io = new Server(server, {
-    cors: {
-      origin: clientUrl,
-      methods: ['GET', 'POST'],
-      credentials: true,
-    },
-  });
+type serverType = http.Server<
+  typeof http.IncomingMessage,
+  typeof http.ServerResponse
+>;
 
-  io.on('connection', (socket) => {
-    console.log(`🟢 Socket connected: ${socket.id}`);
+type ioType = Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;
 
-    socket.on('become_online', (userId: string) => {
-      socketService.becomeOnline(socket, userId);
+class SocketApplication {
+  private static instance: SocketApplication;
+  public app: Application;
+  public server: serverType;
+  public io: ioType;
+
+  private constructor() {
+    this.app = express();
+    this.server = http.createServer(this.app);
+    this.io = new Server(this.server, {
+      cors: {
+        origin: clientUrl,
+        methods: ['GET', 'POST'],
+        credentials: true,
+      },
     });
+    socketEventListener(this.io);
+  }
 
-    socket.on('join_room', (room: string) => {
-      socket.join(room);
-      console.log(`Socket ${socket.id} joined room ${room}`);
-    });
+  public static getInstance(): SocketApplication {
+    if (!SocketApplication.instance) {
+      SocketApplication.instance = new SocketApplication();
+    }
+    return SocketApplication.instance;
+  }
+}
 
-    socket.on('leave_room', (room: string) => {
-      socket.leave(room);
-      console.log(`Socket ${socket.id} left room ${room}`);
-    });
-
-    socket.on('send_message', (message: IMessage, room: string) => {
-      (async () => {
-        await socketService.sendMessage(socket, message, room);
-      })();
-    });
-
-    socket.on('disconnect', () => {
-      socketService.becomeOffline(socket);
-      console.log(`🔴 Socket disconnected: ${socket.id}`);
-    });
-  });
-
-  return io;
-};
-
-export default socketApplication;
+export default SocketApplication;

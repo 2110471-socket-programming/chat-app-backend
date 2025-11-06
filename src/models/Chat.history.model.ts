@@ -39,7 +39,7 @@ const ChatHistorySchema = new Schema<IChatHistory>(
         },
         date: {
           type: Date,
-        }
+        },
       },
     ],
   },

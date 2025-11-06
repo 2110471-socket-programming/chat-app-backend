@@ -2,7 +2,10 @@ import { Request, Response } from 'express';
 import Chat from '../models/Chat.model';
 import ChatHistory from '../models/Chat.history.model';
 
-export const getPrivateChatHistoryById = async (req: Request, res: Response) => {
+export const getPrivateChatHistoryById = async (
+  req: Request,
+  res: Response,
+) => {
   const { chatId } = req.params;
 
   if (!chatId) {
@@ -52,4 +55,4 @@ export const getGroupChats = async (req: Request, res: Response) => {
   const groupChats = await Chat.find({ type: 'group' });
 
   return res.json({ group_chats: groupChats });
-}
+};
