@@ -23,14 +23,6 @@ export const becomeOffline = (socket: socketType) => {
   socket.broadcast.emit('online_clients', Array.from(userSocket.values()));
 };
 
-export const newUser = (socket: socketType, newUser: IUser) => {
-  socket.broadcast.emit('new_user', {
-    _id: newUser._id,
-    name: newUser.name,
-    profileUrl: newUser.profileUrl,
-  });
-};
-
 export const sendMessage = async (
   socket: socketType,
   message: IMessage,

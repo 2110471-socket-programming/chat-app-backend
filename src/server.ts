@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import SocketApplication from './socket/socket.application';
 import storageRouter from './storage/storage.routes';
+import groupRouter from './group/group.routes';
 
 const { app, server } = SocketApplication.getInstance();
 
@@ -25,6 +26,7 @@ app.use('/api/users', userRouter);
 app.use('/api/chats', chatRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/storage', storageRouter);
+app.use('/api/groups', groupRouter);
 
 server.listen(PORT, () => {
   console.log(`Server started on port ${PORT} in ${NODE_ENV} mode`);

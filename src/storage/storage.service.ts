@@ -6,7 +6,7 @@ export const uploadSingleFile = (req: Request, res: Response) => {
   const fileKey = (req.file as Express.MulterS3.File).key;
 
   res.status(200).json({ fileKey: fileKey });
-}
+};
 
 export const deleteSingleFile = async (req: Request, res: Response) => {
   try {
@@ -23,4 +23,4 @@ export const deleteSingleFile = async (req: Request, res: Response) => {
       message: error instanceof Error ? error.message : 'Unknown error',
     });
   }
-}
+};

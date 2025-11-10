@@ -1,7 +1,6 @@
 import { Server, DefaultEventsMap } from 'socket.io';
 import * as SocketService from './socket.service';
 import { IMessage } from '../models/Chat.history.model';
-import { IUser } from '../models/User.model';
 
 type ioType = Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;
 
@@ -13,8 +12,8 @@ const socketEventListener = (io: ioType) => {
       SocketService.becomeOnline(socket, userId);
     });
 
-    socket.on('create_user', (newUser: IUser) => {
-      SocketService.newUser(socket, newUser);
+    socket.on('become_offline', () => {
+      SocketService.becomeOffline(socket);
     });
 
     socket.on('join_room', (room: string) => {

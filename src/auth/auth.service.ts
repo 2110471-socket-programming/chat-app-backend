@@ -3,6 +3,9 @@ import { generateToken } from '../lib/util';
 import { Request, Response } from 'express';
 import User from '../models/User.model';
 import { NODE_ENV } from '../config';
+import SocketApplication from '../socket/socket.application';
+
+const io = SocketApplication.getInstance().io;
 
 export const SignUp = async (req: Request, res: Response) => {
   const { name, password, profileUrl } = req.body;
@@ -35,6 +38,8 @@ export const SignUp = async (req: Request, res: Response) => {
       name: newUser.name,
       profileUrl: newUser.profileUrl,
     };
+
+    io.emit('new_user', newUserWithoutPassword);
 
     generateToken(res, newUser._id.toString());
     res.status(201).json(newUserWithoutPassword);
