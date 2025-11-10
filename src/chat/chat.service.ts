@@ -36,7 +36,7 @@ export const getPrivateChatHistoryById = async (
 };
 
 export const getGroupChatHistoryById = async (req: Request, res: Response) => {
-  const { chatId } = req.query;
+  const { chatId } = req.params;
 
   if (!chatId) {
     return res.status(400).send('Please specify group chatId');
