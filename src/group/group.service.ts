@@ -47,7 +47,9 @@ export const leaveGroup = async (req: Request, res: Response) => {
     return res.status(404).send('Chat not found');
   }
 
-  chat.membersId = chat.membersId.filter((id) => id.toString() !== userId.toString());
+  chat.membersId = chat.membersId.filter(
+    (id) => id.toString() !== userId.toString(),
+  );
   await chat.save();
 
   io.emit('leave_group', groupId, userId);
