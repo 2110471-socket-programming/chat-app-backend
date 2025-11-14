@@ -10,7 +10,13 @@ export const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
 
 export const serverUrl = process.env.SERVER_URL || `http://localhost:${PORT}`;
 
+export const JWT_SECRET = process.env.JWT_SECRET || 'supersecret';
+
 export const mongoUri =
   NODE_ENV === 'production'
     ? process.env.MONGO_URI_PROD || ''
     : process.env.MONGO_URI_DEV || '';
+
+export const spaceKey = process.env.SPACES_KEY || '';
+
+export const spaceSecret = process.env.SPACES_SECRET || '';

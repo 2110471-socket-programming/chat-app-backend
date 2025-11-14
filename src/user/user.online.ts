@@ -1,3 +1,3 @@
 let userSocket = new Map<string, string>();
 
-export default userSocket;
+export default { userSocket: userSocket };
