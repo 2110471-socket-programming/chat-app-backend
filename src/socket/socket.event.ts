@@ -31,6 +31,12 @@ const socketEventListener = (io: ioType) => {
         await SocketService.sendMessage(socket, message, room);
       })();
     });
+    socket.on('typing', (room: string, userId: string) => {
+      socket.to(room).emit('typing', room, userId);
+    })
+    socket.on('stopTyping', (room: string, userId: string) => {
+      socket.to(room).emit('stopTyping', room, userId);
+    })
 
     socket.on('disconnect', () => {
       SocketService.becomeOffline(socket);
